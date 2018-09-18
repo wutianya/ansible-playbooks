@@ -1,0 +1,33 @@
+[Unit]
+Description=Docker Application Container Engine
+Documentation=http://docs.docker.com
+After=network.target docker.socket
+Wants=docker.socket
+
+[Service]
+Type=notify
+{% if docker_storage_options is defined %}
+Environment="DOCKER_STORAGE_OPTIONS=-s {{ docker_storage_options }}"
+{% endif %}
+Environment=GOTRACEBACK=crash
+ExecReload=/bin/kill -s HUP $MAINPID
+Delegate=yes
+KillMode=process
+ExecStart=/usr/bin/dockerd \
+          $DOCKER_OPTS \
+          $DOCKER_STORAGE_OPTIONS \
+          $DOCKER_NETWORK_OPTIONS \
+          $DOCKER_DNS_OPTIONS \
+          $INSECURE_REGISTRY
+TasksMax=infinity
+LimitNOFILE=1048576
+LimitNPROC=1048576
+LimitCORE=infinity
+TimeoutStartSec=1min
+# restart the docker process if it exits prematurely
+Restart=on-failure
+StartLimitBurst=3
+StartLimitInterval=60s
+
+[Install]
+WantedBy=multi-user.target

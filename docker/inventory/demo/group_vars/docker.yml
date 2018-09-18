@@ -1,0 +1,11 @@
+# docker version
+docker_package: "docker-ce=17.03.0~ce-0~ubuntu-xenial"
+# docker storage
+docker_storage_options: overlay2
+# docker image mirror
+docker_registry_mirror: https://registry.docker-cn.com
+docker_options: "--registry-mirror={{ docker_registry_mirror }}"
+# install docker-compose
+docker_install_compose: true
+# added to docker group
+docker_users: []

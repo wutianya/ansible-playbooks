@@ -1,0 +1,13 @@
+---
+- name: Set docker data dir
+  file:
+    path: /data/docker
+    state: directory
+    mode: 0755
+
+- name: Create Link
+  file:
+    src: "{{ docker_install_dir }}"
+    dest: /var/lib/docker
+    state: link
+

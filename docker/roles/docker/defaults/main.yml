@@ -1,0 +1,32 @@
+---
+# Edition
+docker_edition: 'ce'
+docker_package: "docker-{{ docker_edition }}"
+docker_package_state: present
+
+# Service options
+docker_service_state: started
+docker_service_enabled: yes
+docker_restart_handler_state: restarted
+
+# Dcocker install options
+custom_install: true
+docker_install_dir: /data/docker
+
+# Docker Compose options
+docker_install_compose: True
+docker_compose_version: "1.22.0"
+docker_compose_path: /usr/local/bin/docker-compose
+
+# Used only for Debian/Ubuntu
+docekr_mirror: https://mirrors.aliyun.com/docker-ce/linux
+docker_apt_release_channel: stable
+docker_apt_arch: amd64
+docker_apt_repository: "deb [arch={{ docker_apt_arch }}] {{ docekr_mirror }}/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+docker_apt_ignore_key_error: True
+
+# Used only for Centos
+# Skip
+
+# A list of users who will be added to the docker group.
+docker_users: []
